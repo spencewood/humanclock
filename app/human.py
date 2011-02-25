@@ -1,8 +1,7 @@
 import urllib,urllib2,cookielib
+from cookielib import CookieJar
+from urllib2 import HTTPRedirectHandler
 from BeautifulSoup import BeautifulSoup
-
-#User agent that will access the pages
-PEOPLE_USER_AGENT = { 'User-agent': 'Boxee Python Agent' }
 
 class Human(object):
 	"""A class for retrieving "human" content"""
@@ -17,25 +16,33 @@ class Human(object):
 
 class HumanPage(object):
 	"""A base class for reading HTML pages"""
-	def _getPage(self, page_url, params=None):
-		encoded_params = None
-		if params:
-			encoded_params = urllib.urlencode(params)
-		
-		source = urllib2.urlopen(page_url)
+	_opener = None
+	_home = "http://www.humanclock.com/"
 
-		return source.read()
+	def __init__(self):
+		cookie_handler= urllib2.HTTPCookieProcessor()
+		redirect_handler= urllib2.HTTPRedirectHandler()
+		self._opener = urllib2.build_opener(redirect_handler, cookie_handler)
+
+		self._navigateHome()
+
+	def _navigateHome(self):
+		"""Open the home page to establish necessary cookies"""
+		self._opener.open(self._home)
+
+	def _getPage(self, page, params=None):
+		return self._opener.open(self._home + page).read()
 
 class HumanClock(HumanPage):
 	"""Handles getting the current image from the clock page"""
 	def __init__(self):
-		pass
+		super(HumanClock, self).__init__()
 
 	def getImage(self):
-		html = self._getPage('http://www.humanclock.com/clock.php')
+		html = self._getPage('clock.php')
 
 		soup = BeautifulSoup(html)
-		assert False, soup.findAll('img')
+		return soup.findAll('img', {'name':'locationimage'})
 
 class HumanCalendar(HumanPage):
 	pass
