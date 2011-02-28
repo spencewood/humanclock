@@ -3,20 +3,23 @@ from cookielib import CookieJar
 from urllib2 import HTTPRedirectHandler
 from BeautifulSoup import BeautifulSoup
 
+CLOCK_IMAGE_NAME = "clockImage_main"
+
 class Human(object):
 	"""A class for retrieving "human" content"""
 	def __init__(self):
 		pass
 
-	def getCurrentClock(self):
-		HumanClock().getImage()
+	def GetCurrentClockURL(self):
+		return HumanClock().GetImage()
 
-	def getCurrentCalendar(self):
+	def GetCurrentCalendar(self):
 		pass
 
 class HumanPage(object):
 	"""A base class for reading HTML pages"""
 	_opener = None
+	_page = None
 	_home = "http://www.humanclock.com/"
 
 	def __init__(self):
@@ -31,21 +34,24 @@ class HumanPage(object):
 		self._opener.open(self._home)
 
 	def _getPage(self, page, params=None):
-		return self._opener.open(self._home + page).read()
+		if self._page is None:
+			self._page = self._opener.open(self._home + page).read()
+		return self._page
 
 class HumanClock(HumanPage):
 	"""Handles getting the current image from the clock page"""
+	_soup = None
+
 	def __init__(self):
 		super(HumanClock, self).__init__()
-
-	def getImage(self):
 		html = self._getPage('clock.php')
+		self._soup = BeautifulSoup(html)
 
-		soup = BeautifulSoup(html)
-		return soup.findAll('img', {'name':'locationimage'})
+	def GetImage(self):
+		return self._soup.find('img', {'name':CLOCK_IMAGE_NAME})["src"]
 
 class HumanCalendar(HumanPage):
 	pass
 
 if __name__ == '__main__':
-	Human().getCurrentClock()
+	print Human().GetCurrentClockURL()

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<window type="window" id="14000">
+	<defaultcontrol always="true">100</defaultcontrol>
+	<allowoverlay>no</allowoverlay>
+	<onload lang="python">
+<![CDATA[
+
+def reload():
+	mc.ShowDialogWait()
+	from human import Human
+	mc.GetActiveWindow().GetImage(102).SetTexture(str(Human().GetCurrentClockURL()))
+	mc.HideDialogWait()
+
+reload()
+]]>
+	</onload>
+	<controls>
+		<control type="image" id="101">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>obg.png</texture>
+		</control>
+		<control type="largeimage" id="102">
+			<posx>390</posx>
+			<posy>100</posy>
+			<width>450</width>
+			<height>354</height>
+		</control>
+	</controls>
+</window>
