@@ -1,4 +1,5 @@
-import urllib,urllib2,cookielib
+import urllib,urllib2,cookielib,time
+from time import strftime
 from cookielib import CookieJar
 from urllib2 import HTTPRedirectHandler
 from BeautifulSoup import BeautifulSoup
@@ -11,7 +12,7 @@ class Human(object):
 		pass
 
 	def GetCurrentClockURL(self):
-		return HumanClock().GetImage()
+		return HumanClock().GetClockURL()
 
 	def GetCurrentCalendar(self):
 		pass
@@ -31,7 +32,7 @@ class HumanPage(object):
 
 	def _navigateHome(self):
 		"""Open the home page to establish necessary cookies"""
-		self._opener.open(self._home)
+		self._opener.open(self._home, urllib.urlencode({'jsform': 1, 'BT': strftime("%H-%M-%S-%m-%d-%Y", time.localtime())}))
 
 	def _getPage(self, page, params=None):
 		if self._page is None:
@@ -47,7 +48,7 @@ class HumanClock(HumanPage):
 		html = self._getPage('clock.php')
 		self._soup = BeautifulSoup(html)
 
-	def GetImage(self):
+	def GetClockURL(self):
 		return self._soup.find('img', {'name':CLOCK_IMAGE_NAME})["src"]
 
 class HumanCalendar(HumanPage):

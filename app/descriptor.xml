@@ -3,11 +3,10 @@
   <name>Human Clock</name>
   <version>0.1</version>
   <description>Watch humans and clocks.</description>
-  <thumb>http://stepheneisenhauer.com/boxee/reddit-hd-thumb.png</thumb>
+  <thumb></thumb>
   <repository>http://dir.boxee.tv/apps</repository>
   <media>video</media>
-  <copyright>Stephen Eisenhauer</copyright>
-  <email>mail@stepheneisenhauer.com</email>
+  <email>contact@tylercollard.com</email>
   <type>skin</type>
   <startWindow>14000</startWindow>
   <platform>all</platform>
