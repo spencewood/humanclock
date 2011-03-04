@@ -32,12 +32,20 @@ class HumanPage(object):
 
 	def _navigateHome(self):
 		"""Open the home page to establish necessary cookies"""
-		self._opener.open(self._home, urllib.urlencode({'jsform': 1, 'BT': strftime("%H-%M-%S-%m-%d-%Y", time.localtime())}))
+		self._getPage("", {
+				'jsform': 1,
+				'BT': strftime("%H-%M-%S-%m-%d-%Y", time.localtime())
+			})
 
 	def _getPage(self, page, params=None):
+		"""Get a page"""
 		if self._page is None:
-			self._page = self._opener.open(self._home + page).read()
-		return self._page
+			encodedParams = None
+			if params is not None:
+				encodedParams = urllib.urlencode(params)
+
+			return self._opener.open(self._home + page,
+					encodedParams).read()
 
 class HumanClock(HumanPage):
 	"""Handles getting the current image from the clock page"""
