@@ -11,10 +11,10 @@ class Human(object):
 	def __init__(self):
 		pass
 
-	def GetCurrentClockURL(self):
+	def GetClockURL(self):
 		return HumanClock().GetClockURL()
 
-	def GetCurrentCalendar(self):
+	def GetCalendarURL(self):
 		pass
 
 class HumanPage(object):
@@ -63,4 +63,4 @@ class HumanCalendar(HumanPage):
 	pass
 
 if __name__ == '__main__':
-	print Human().GetCurrentClockURL()
+	print Human().GetClockURL()

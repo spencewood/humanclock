@@ -4,13 +4,20 @@
 	<allowoverlay>no</allowoverlay>
 	<onload lang="python">
 <![CDATA[
+import time
+from human import Human
+from datetime import datetime
 
+h = Human()
 def reload():
 	mc.ShowDialogWait()
 	from human import Human
-	mc.GetActiveWindow().GetImage(102).SetTexture(str(Human().GetCurrentClockURL()))
+	mc.GetActiveWindow().GetImage(102).SetTexture(str(h.GetClockURL()))
 	mc.HideDialogWait()
 
+while True:
+	reload()
+	time.sleep(60 - datetime.now().second)
 reload()
 ]]>
 	</onload>
@@ -27,6 +34,7 @@ reload()
 			<posy>100</posy>
 			<width>450</width>
 			<height>354</height>
+			<fadetime>200</fadetime>
 		</control>
 	</controls>
 </window>
