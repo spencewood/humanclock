@@ -5,14 +5,13 @@
 	<onload lang="python">
 <![CDATA[
 import time
-from human import Human
+from human import HumanClock
 from datetime import datetime
 
-h = Human()
+clock = HumanClock()
 def reload():
 	mc.ShowDialogWait()
-	from human import Human
-	mc.GetActiveWindow().GetImage(102).SetTexture(str(h.GetClockURL()))
+	mc.GetActiveWindow().GetImage(102).SetTexture(str(clock.GetImageURL()))
 	mc.HideDialogWait()
 
 while True:
