@@ -1,15 +1,15 @@
 <app>
-  <id>humanclock</id>
-  <name>Human Clock</name>
-  <version>0.1</version>
-  <description>Watch humans and clocks.</description>
-  <thumb></thumb>
-  <repository>http://dir.boxee.tv/apps</repository>
-  <media>video</media>
-  <email>contact@tylercollard.com</email>
-  <type>skin</type>
-  <startWindow>14000</startWindow>
-  <platform>all</platform>
-  <minversion>0.9.11</minversion>
-  <test-app>true</test-app>
+	<id>org.tuesoft.boxee.humanclock</id>
+	<name>Human Clock</name>
+	<version>0.1</version>
+	<description>Watch humans in real time</description>
+	<thumb></thumb>
+	<repository>http://dir.boxee.tv/apps</repository>
+	<media>video</media>
+	<email>contact@tylercollard.com</email>
+	<type>skin</type>
+	<startWindow>14000</startWindow>
+	<platform>all</platform>
+	<minversion>0.9.11</minversion>
+	<test-app>true</test-app>
 </app>
