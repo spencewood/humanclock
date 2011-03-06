@@ -26,13 +26,12 @@ class HumanPage(object):
 
 	def _getPage(self, page, params=None):
 		"""Get a page"""
-		if self._page is None:
-			encodedParams = None
-			if params is not None:
-				encodedParams = urllib.urlencode(params)
+		encodedParams = None
+		if params is not None:
+			encodedParams = urllib.urlencode(params)
 
-			return self._opener.open(self._home + page,
-					encodedParams).read()
+		return self._opener.open(self._home + page,
+				encodedParams).read()
 
 class HumanClock(HumanPage):
 	"""Handles getting the current image from the clock page"""
@@ -42,10 +41,11 @@ class HumanClock(HumanPage):
 
 	def __init__(self):
 		super(HumanClock, self).__init__()
+
+	def GetImageURL(self):
 		html = self._getPage(self._clockPage)
 		self._soup = BeautifulSoup(html)
 
-	def GetImageURL(self):
 		return self._soup.find('img', {'name':self._clockImageName})["src"]
 
 class HumanCalendar(HumanPage):

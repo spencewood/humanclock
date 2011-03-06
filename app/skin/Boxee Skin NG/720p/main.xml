@@ -17,7 +17,6 @@ def reload():
 while True:
 	reload()
 	time.sleep(60 - datetime.now().second)
-reload()
 ]]>
 	</onload>
 	<controls>
