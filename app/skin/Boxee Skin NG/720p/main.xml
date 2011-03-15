@@ -4,21 +4,39 @@
 	<allowoverlay>no</allowoverlay>
 	<onload lang="python">
 <![CDATA[
-import time
+import sched, time, xbmc
 from human import HumanClock
 from datetime import datetime
 
 clock = HumanClock()
+s = sched.scheduler(time.time, time.sleep)
+t = datetime.now()
+
 def reload():
 	mc.ShowDialogWait()
-	mc.GetActiveWindow().GetImage(102).SetTexture(str(clock.GetImageURL()))
+	url = "%s?%i" % (str(clock.GetImageURL()), t.second)
+	mc.GetActiveWindow().GetImage(102).SetTexture(url)
 	mc.HideDialogWait()
+	xbmc.executehttpapi("SendKey(272)")
 
-while True:
-	reload()
-	time.sleep(60 - datetime.now().second)
+def bump(sc):
+	global t
+	now = datetime.now()
+	xbmc.executebuiltin("Control.SetLabel(%i,%i)" % (103, now.second))
+	if t.minute is not now.minute:
+		t = now
+		reload()
+	sc.enter(1,1,bump,(sc,))
+
+s.enter(1,1,bump,(s,))
+reload()
+s.run()
 ]]>
 	</onload>
+	<onunload lan="python">
+<![CDATA[
+]]>
+	</onunload>
 	<controls>
 		<control type="image" id="101">
 			<posx>0</posx>
@@ -28,11 +46,20 @@ while True:
 			<texture>obg.png</texture>
 		</control>
 		<control type="largeimage" id="102">
-			<posx>390</posx>
+			<posx>388</posx>
 			<posy>100</posy>
 			<width>450</width>
 			<height>354</height>
+			<aspectratio align="center">keep</aspectratio>
 			<fadetime>200</fadetime>
+		</control>
+		<control type="textbox" id="103">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>250</width>
+			<height>200</height>
+			<font>font21</font>
+			<textcolor>white</textcolor>
 		</control>
 	</controls>
 </window>
